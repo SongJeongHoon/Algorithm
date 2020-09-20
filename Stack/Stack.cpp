@@ -1,20 +1,114 @@
-﻿// Stack.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
-//
+﻿#include <iostream>
+#include <algorithm>
 
-#include <iostream>
+#define MAGICNUM -1
+
+using namespace std;
+
+int* MyStack = nullptr;
+int Size = 0;
+int InputData = 0;
+int InputValue = 0;
+int CurrentSelectIndex = 0;
+
+void Push(int*& _array, int& _curIndex, int& _size, int _value);
+void Pop(int*& _array, int& _curIndex);
+void ShowStack(int* _array, int _size);
+void Print_fuc(int _data);
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	cout << "Size of stack_";
+	cin >> Size;
+	cout << "\n";
+
+	MyStack = new int[Size];
+
+	for (int i = 0; i < Size; i++) {
+		MyStack[i] = MAGICNUM;
+	}
+
+	while (true) {
+		cout << "\n(int)[STACK]\n\t1.PUSH 2.POP\n" << "\tChoice_";
+		cin >> InputData;
+		cout << "\n";
+
+		switch (InputData)
+		{
+		case 1:
+			cout << "Enter an integer value for the stack_";
+			cin >> InputValue;
+			cout << "\n";
+			Push(MyStack, CurrentSelectIndex, Size, InputValue);
+			break;
+
+		case 2:
+			Pop(MyStack, CurrentSelectIndex);
+			break;
+
+		default:
+			cout << "YOU CHOSE THE WRONG NUMBER!!\n";
+			break;
+		}
+	}
+
+	delete[] MyStack;
+
+	return 0;
 }
 
-// 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴
-// 프로그램 디버그: <F5> 키 또는 [디버그] > [디버깅 시작] 메뉴
+void Push(int*& _array, int& _curIndex, int& _size, int _value)
+{
+	// 만약 스택의 크기만큼 꽉 차있다면
+	if (_curIndex >= _size) {
+		// 스택의 크기는 하나 늘어난다
+		int newSize = _size + 1;
+		// 새로운 스택의 크기만큼 임시 스택생성
+		int* tempStack = new int[newSize];
 
-// 시작을 위한 팁: 
-//   1. [솔루션 탐색기] 창을 사용하여 파일을 추가/관리합니다.
-//   2. [팀 탐색기] 창을 사용하여 소스 제어에 연결합니다.
-//   3. [출력] 창을 사용하여 빌드 출력 및 기타 메시지를 확인합니다.
-//   4. [오류 목록] 창을 사용하여 오류를 봅니다.
-//   5. [프로젝트] > [새 항목 추가]로 이동하여 새 코드 파일을 만들거나, [프로젝트] > [기존 항목 추가]로 이동하여 기존 코드 파일을 프로젝트에 추가합니다.
-//   6. 나중에 이 프로젝트를 다시 열려면 [파일] > [열기] > [프로젝트]로 이동하고 .sln 파일을 선택합니다.
+		// 임시 스택에 기존스택 데이터 저장
+		for (int i = 0; i < newSize; i++) {
+			if (i == newSize - 1)
+				tempStack[i] = MAGICNUM;
+			else
+				tempStack[i] = _array[i];
+		}
+
+		// 스택 사용 해제
+		delete[] _array;
+
+		// 새로운 크기만큼 스택 재할당
+		_array = new int[newSize];
+		// 기존 스택에 임시 스택 삽입
+		_array = tempStack;
+		// 최종 스택의 크기 초기화
+		_size = newSize;
+	}
+
+	// 입력받은 값을 스택[현재 선택된 인덱스 값] 에 넣어주기
+	_array[_curIndex] = _value;
+	// 다음 입력받은 값이 들어가게될 인덱스 값 설정
+	_curIndex++;
+
+	// 스택 출력
+	ShowStack(_array, _size);
+}
+
+void Pop(int*& _array, int& _curIndex)
+{
+	
+}
+
+void ShowStack(int* _array, int _size)
+{
+	cout << "(int)STACK\n";
+
+	for_each(_array, &_array[_size], Print_fuc);
+
+	cout << "\n";
+}
+
+void Print_fuc(int _data)
+{
+	cout << "[" << _data << "]";
+}
