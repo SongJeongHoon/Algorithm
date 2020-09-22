@@ -1,2 +1,4 @@
 C:\Users\calf3\Documents\GitHub\Algorithm\Stack\Debug\Stack.exe
 C:\Users\calf3\Documents\GitHub\Algorithm\Stack\Debug\Stack.pdb
+C:\Users\KGIT06\Documents\GitHub\Algorithm\Stack\Debug\Stack.exe
+C:\Users\KGIT06\Documents\GitHub\Algorithm\Stack\Debug\Stack.pdb

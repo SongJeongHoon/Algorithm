@@ -12,7 +12,7 @@ int InputValue = 0;
 int CurrentSelectIndex = 0;
 
 void Push(int*& _array, int& _curIndex, int& _size, int _value);
-void Pop(int*& _array, int& _curIndex);
+void Pop(int*& _array, int& _curIndex, int& _size);
 void ShowStack(int* _array, int _size);
 void Print_fuc(int _data);
 
@@ -43,7 +43,7 @@ int main()
 			break;
 
 		case 2:
-			Pop(MyStack, CurrentSelectIndex);
+			Pop(MyStack, CurrentSelectIndex, Size);
 			break;
 
 		default:
@@ -53,6 +53,8 @@ int main()
 	}
 
 	delete[] MyStack;
+
+	MyStack = nullptr;
 
 	return 0;
 }
@@ -76,7 +78,8 @@ void Push(int*& _array, int& _curIndex, int& _size, int _value)
 
 		// 스택 사용 해제
 		delete[] _array;
-
+		// 스택 비워주기
+		_array = nullptr;
 		// 새로운 크기만큼 스택 재할당
 		_array = new int[newSize];
 		// 기존 스택에 임시 스택 삽입
@@ -94,13 +97,55 @@ void Push(int*& _array, int& _curIndex, int& _size, int _value)
 	ShowStack(_array, _size);
 }
 
-void Pop(int*& _array, int& _curIndex)
+void Pop(int*& _array, int& _curIndex, int& _size)
 {
+	// 이미 스택이 비어있다면
+	if (_size <= 0) {
+		cout << "Stack is empty!!\n";
+		return;
+	}
+
+	// 새로운 스택의 크기는 현재 크기에서 하나 감소한다
+	int newSize = _size - 1;
+
+	// 새로운 크기로 임시 스택 할당
+	int* tempStack = new int[newSize];
+
+	// 임시 스택에 현재 스택의 데이터 저장
+	for (int i = 0; i < newSize; i++) {
+		tempStack[i] = _array[i];
+	}
+
+	// 사용중인 스택 해제
+	delete[] _array;
+
+	// 스택 비워주기
+	_array = nullptr;
+
+	// 새로운 크기(줄어든 크기로) 스택 재할당
+	_array = new int[newSize];
+
+	// 임시 스택을 사용중인 스택에 저장
+	_array = tempStack;
 	
+	// 새로운 크기 설정
+	_size = newSize;
+
+	// 다음을 가르키는 인덱스 값 갱신
+	_curIndex--;
+	
+	// 스택 출력
+	ShowStack(_array, _size);
 }
 
 void ShowStack(int* _array, int _size)
 {
+	// 이미 스택이 비어있다면
+	if (_size <= 0) {
+		cout << "Stack is empty!!\n";
+		return;
+	}
+
 	cout << "(int)STACK\n";
 
 	for_each(_array, &_array[_size], Print_fuc);
