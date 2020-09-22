@@ -92,7 +92,6 @@ void Push(int*& _array, int& _curIndex, int& _size, int _value)
 	_array[_curIndex] = _value;
 	// 다음 입력받은 값이 들어가게될 인덱스 값 설정
 	_curIndex++;
-
 	// 스택 출력
 	ShowStack(_array, _size);
 }
@@ -107,7 +106,6 @@ void Pop(int*& _array, int& _curIndex, int& _size)
 
 	// 새로운 스택의 크기는 현재 크기에서 하나 감소한다
 	int newSize = _size - 1;
-
 	// 새로운 크기로 임시 스택 할당
 	int* tempStack = new int[newSize];
 
@@ -118,22 +116,16 @@ void Pop(int*& _array, int& _curIndex, int& _size)
 
 	// 사용중인 스택 해제
 	delete[] _array;
-
 	// 스택 비워주기
 	_array = nullptr;
-
 	// 새로운 크기(줄어든 크기로) 스택 재할당
 	_array = new int[newSize];
-
 	// 임시 스택을 사용중인 스택에 저장
-	_array = tempStack;
-	
+	_array = tempStack;	
 	// 새로운 크기 설정
 	_size = newSize;
-
 	// 다음을 가르키는 인덱스 값 갱신
-	_curIndex--;
-	
+	_curIndex--;	
 	// 스택 출력
 	ShowStack(_array, _size);
 }
