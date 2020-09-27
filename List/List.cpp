@@ -207,6 +207,7 @@ void DeleteNodeAll(Node*& _headNode)
 {
 	// 머리노드만 삭제하면 뒤에 연결된 노드들을 잃게된다. 즉, 메모리 누수가 일어난다.
 
+
 }
 
 void DeleteNode(Node*& _headNode, int _index)
