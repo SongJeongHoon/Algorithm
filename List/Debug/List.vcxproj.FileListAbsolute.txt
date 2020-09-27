@@ -1,2 +1,4 @@
 C:\Users\KGIT06\Documents\GitHub\Algorithm\List\Debug\List.exe
 C:\Users\KGIT06\Documents\GitHub\Algorithm\List\Debug\List.pdb
+C:\Users\calf3\Documents\GitHub\Algorithm\List\Debug\List.exe
+C:\Users\calf3\Documents\GitHub\Algorithm\List\Debug\List.pdb
