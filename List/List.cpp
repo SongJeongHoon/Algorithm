@@ -82,7 +82,7 @@ int main()
 
 			if (inputData == Delete_All)
 			{
-
+				DeleteNodeAll(HeadNode);
 			}
 			else if (inputData == Select_Index_Delete)
 			{
@@ -99,7 +99,9 @@ int main()
 
 		PrintNodes(HeadNode);
 		//PrintNodesRevert(HeadNode);
-	}
+	}	
+
+	DeleteNodeAll(HeadNode);
 }
 
 void AddNode(Node*& _headNode, int _data)
@@ -205,9 +207,38 @@ void AddNode(Node*& _headNode, int _index, int _data)
 
 void DeleteNodeAll(Node*& _headNode)
 {
+	if (_headNode == nullptr)
+	{
+		puts("List is empty!!");
+		return;
+	}
+
 	// 머리노드만 삭제하면 뒤에 연결된 노드들을 잃게된다. 즉, 메모리 누수가 일어난다.
+	// 탐색할 노드(반복문을 돌며 삭제할 노드)는 머리노드의 다음노드
+	Node* pTargetNode = _headNode->pNextNode;
 
+	// 머리노드는 맨 마지막에 삭제하며 머리노드 다음을 삭제, 삭제, 삭제 ... 최종 머리노드만 남을 때 까지 반복한다
+	while (pTargetNode != nullptr) 
+	{
+		// 머리노드의 다음 노드는, 삭제할 노드의 다음노드로 연결
+		_headNode->pNextNode = pTargetNode->pNextNode;
 
+		// 타겟 노드를 해제 (머리노드의 바로앞 노드를 해제)
+		delete pTargetNode;
+		
+		// 타겟노드 비게 한다
+		pTargetNode = nullptr;
+
+		// 그다음 타겟 노드는 머리노드의 다음 노드로 갱신
+		pTargetNode = _headNode->pNextNode;
+	}
+
+	// 반복문을 빠져나오면 머리노드밖에 남지않는다
+	// 최종적으로 머리노드 해제
+	delete _headNode;
+
+	// 머리노드 빈공간으로
+	_headNode = nullptr;	
 }
 
 void DeleteNode(Node*& _headNode, int _index)
@@ -277,6 +308,12 @@ void DeleteNode(Node*& _headNode, int _index)
 
 void PrintNodes(Node* _headNode)
 {
+	if (_headNode == nullptr)
+	{
+		puts("List is empty!!");
+		return;
+	}
+
 	// 순회용 노드는 머리 노드부터 시작한다
 	Node* pSearchNode = _headNode;
 	// 노드들의 인덱스 값을 보여주기 위한 변수
@@ -296,6 +333,12 @@ void PrintNodes(Node* _headNode)
 
 void PrintNodesRevert(Node* _headNode)
 {
+	if (_headNode == nullptr)
+	{
+		puts("List is empty!!");
+		return;
+	}
+
 	// 맨뒤의 노드를 찾기위한 순회용 노드
 	Node* pSearchNode = _headNode;
 	// 노드들의 인덱스 값을 보여주기 위한 변수
