@@ -106,19 +106,30 @@ void BubbleSort(int*& _array, int _size)
 void SelectionSort(int*& _array, int _size)
 {
 	int minData = 0;
+	int findIndex = 0;
 
 	for (int i = 0; i < _size - 1; i++)
 	{
 		minData = _array[i];
 
-		for (int j = i + 1; j < _size; j++)
+		int nextIndex = i + 1;
+
+		while (nextIndex < _size)
 		{
-			if (minData > _array[j])
+			if (minData > _array[nextIndex])
 			{
-				minData = _array[j];
+				minData = _array[nextIndex];
+				findIndex = nextIndex;
 			}
+
+			nextIndex++;
+		}
+		
+		if (minData != _array[i])
+		{
+			Swap(_array[i], _array[findIndex]);
+			findIndex = 0;
 		}
 
-		_array[i] = minData;
 	}
 }
