@@ -1,3 +1,2 @@
 ﻿  Tree.cpp
-C:\Users\calf3\Documents\GitHub\Algorithm\Tree\Tree.cpp(12,1): error C2628: 'Node' 다음에 'int'이(가) 올 수 없습니다. ';'이 있어야 합니다.
-C:\Users\calf3\Documents\GitHub\Algorithm\Tree\Tree.cpp(13,1): error C3874: 'main'의 반환 형식이 'int'이어야 하는데 'Node'입니다.
+  Tree.vcxproj -> C:\Users\calf3\Documents\GitHub\Algorithm\Tree\Debug\Tree.exe
