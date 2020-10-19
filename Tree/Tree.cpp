@@ -71,27 +71,48 @@ void Push(int _data, Node*& _rootNode)
 
 void Pop(int _data, Node*& _rootNode)
 {
+	// 삭제할 노드 찾아내기
 	Node* prevSearchNode = nullptr;
-	Node* SearchNode = _rootNode;
+	Node* searchNode = _rootNode;
 
-	while (SearchNode->Data != _data)
+	while (_data != searchNode->Data)
 	{
-		prevSearchNode = SearchNode;
+		prevSearchNode = searchNode;
 
-		if (SearchNode->Data < _data)
+		if (_data < searchNode->Data)
 		{
-			SearchNode = SearchNode->LeftChild;
+			searchNode = searchNode->LeftChild;
 		}
-		else if (SearchNode->Data > _data)
+		else if (_data > searchNode->Data)
 		{
-			SearchNode = SearchNode->RightChild;
+			searchNode = searchNode->RightChild;
 		}
 	}
 
-	// 왼쪽자식은 있고 오른쪽 자식은 없다면
-	if (SearchNode->LeftChild && !SearchNode->RightChild)
-	{	
-		Node* prevNode = 
+	// 삭제할 노드의 자식이 왼쪽밖에 없다면
+	if (searchNode->LeftChild && !searchNode->RightChild)
+	{
+		// 삭제할 노드의 자식중 제일큰 값을 가진 노드를 찾아야한다. 그 노드는 제일 오른쪽 잎 노드가 될것이다.		
+		Node* prevReafNode = nullptr;
+		Node* reafNode = searchNode->LeftChild;
+
+		if (reafNode->RightChild)
+		{
+			while (reafNode->RightChild)
+			{
+				prevReafNode = reafNode;
+				reafNode = reafNode->RightChild;
+			}
+
+			prevReafNode->RightChild = nullptr;
+
+			reafNode->LeftChild = searchNode->LeftChild;
+		}
+
+		prevSearchNode->LeftChild = reafNode;
+
+		delete searchNode;
+		searchNode = nullptr;
 	}
 }
 
